@@ -1708,6 +1708,7 @@ const publishWeb = async () => {
             confirmButtonText: t('confirm'),
             type: 'warning',
             center: true,
+            showCancelButton: false,
         }).finally(() => {
             openUrl(urlMap.questiondoc)
         })
@@ -1726,6 +1727,7 @@ const publishCheck = async () => {
         await easyLocal()
     } else if (store.token === '') {
         oneMessage.error(t('configToken'))
+        buildLoading.value = false
         return
     } else {
         if (checkLastPublish()) {
