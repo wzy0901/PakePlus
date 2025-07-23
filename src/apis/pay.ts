@@ -1,11 +1,16 @@
-import { basePAYJSURL, baseYUNPAYURL, zPayDomain } from '@/utils/common'
+import {
+    basePayjsUrl,
+    baseYunPayUrl,
+    ppApisDomain,
+    zPayDomain,
+} from '@/utils/common'
 import request from '@/utils/request'
 import http from '@/utils/http'
 
 export default {
     // get pay code
     getPayJsCode(params: any) {
-        return request(`${basePAYJSURL}/api/native`, {
+        return request(`${basePayjsUrl}/api/native`, {
             method: 'post',
             headers: {
                 'content-type': 'multipart/form-data',
@@ -13,8 +18,26 @@ export default {
             data: params,
         })
     },
+    getPayJsCallback(params: any) {
+        return http(`${basePayjsUrl}/api/native`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            params: params,
+        })
+    },
+    checkPayJsStatus(params: any) {
+        return http(`${basePayjsUrl}/api/check`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            params: params,
+        })
+    },
     getYunPayCode(params: any) {
-        return request(`${baseYUNPAYURL}/api/pay/wxpay/nativePay`, {
+        return request(`${baseYunPayUrl}/api/pay/wxpay/nativePay`, {
             method: 'post',
             data: params,
             headers: {
@@ -23,7 +46,7 @@ export default {
         })
     },
     checkYunPayStatus(params: any) {
-        return request(`${baseYUNPAYURL}/api/system/order/getPayOrderInfo`, {
+        return request(`${baseYunPayUrl}/api/system/order/getPayOrderInfo`, {
             method: 'GET',
             params,
         })
@@ -44,6 +67,11 @@ export default {
         return http(`${zPayDomain}/api.php`, {
             method: 'get',
             params: params,
+        })
+    },
+    getPpApis() {
+        return request(`${ppApisDomain}/login`, {
+            method: 'get',
         })
     },
 }
